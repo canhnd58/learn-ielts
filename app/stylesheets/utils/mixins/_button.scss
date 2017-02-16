@@ -1,0 +1,65 @@
+@import 'hover';
+@import '../variables';
+
+@mixin button_general {
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    position: relative;
+    border: 0;
+    text-decoration: none;
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+}
+
+@mixin button_new {
+    @include button_general;
+
+    color: $primary-color-text;
+    background-color: $accent-color;
+    box-shadow: 0.3rem 0.3rem $accent-color-dark;
+
+    &:active {
+        transform: translate(0.1rem, 0.1rem);
+        box-shadow: 0.2rem 0.2rem $accent-color-dark;
+    }
+}
+
+@mixin button_delete {
+    @include button_general;
+
+    color: $primary-color-text;
+    background-color: $cautious-color;
+    box-shadow: 0.3rem 0.3rem $cautious-color-dark;
+    font-style: none;
+
+    &:active {
+        transform: translate(0.1rem, 0.1rem);
+        box-shadow: 0.2rem 0.2rem $cautious-color;
+    }
+}
+
+@mixin button_choose {
+    @include button_general;
+
+    color: $primary-color-text;
+    background-color: $primary-color;
+    box-shadow: 0.3rem 0.3rem $primary-color-dark;
+
+    &:active {
+        transform: translate(0.1rem, 0.1rem);
+        box-shadow: 0.2rem 0.2rem $primary-color-dark;
+    }
+}
+
+@mixin button_round {
+    @include button_general;
+    background-color: white;
+    border: 0.3rem solid $primary-color-dark;
+    border-radius: 50%;
+    &:active {
+        transform: translate(0.1rem, 0.1rem);
+    }
+}

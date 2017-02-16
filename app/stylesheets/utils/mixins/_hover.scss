@@ -1,0 +1,64 @@
+@mixin hover_left($color) {
+    &:hover:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-right: -0.5rem;
+        margin-top: -1rem;
+        border-width: 1rem;
+        border-style: solid;
+        border-color: transparent transparent transparent $color;
+        z-index: 200;
+    }
+}
+
+@mixin hover_right($color) {
+    &:hover:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-left: -0.5rem;
+        margin-top: -1rem;
+        border-width: 1rem;
+        border-style: solid;
+        border-color: transparent $color transparent transparent;
+        z-index: 200;
+    }
+}
+
+@mixin hover_bottom($color) {
+    &:hover:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -1rem;
+        margin-top: -0.5rem;
+        border-width: 1rem;
+        border-style: solid;
+        border-color: transparent transparent $color transparent;
+        z-index: 200;
+    }
+}
+
+@mixin hover_top($color) {
+    &:hover:after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin: 0;
+        margin-left: -1rem;
+        margin-bottom: -0.5rem;
+        border-width: 1rem;
+        border-style: solid;
+        border-color: $color transparent transparent transparent;
+        z-index: 200;
+    }
+}

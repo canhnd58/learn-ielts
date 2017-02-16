@@ -1,0 +1,31 @@
+#card-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -15rem 0 0 -20rem;
+    text-align: center;
+
+    .card-single {
+        width: 40rem;
+        height: 20rem;
+        line-height: 20rem;
+        font-size: 3.6rem;
+        border: 0.2rem solid $primary-color-dark;
+
+        .card-sound-btn {
+            @include button_round;
+            font-size: inherit;
+            width: 8rem;
+            height: 8rem;
+        }
+    }
+
+    #card-next-btn {
+        @include button_choose;
+    }
+
+    #card-reset-btn {
+        @include button_choose;
+        margin-left: 0.5rem;
+    }
+}

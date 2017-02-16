@@ -1,0 +1,48 @@
+@import 'utils/all';
+
+html {
+    font-size: 62.5%;
+}
+
+@font-face {
+    font-family: 'Patrick Hand';
+    src: url('fonts/PatrickHand-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Itim';
+    src: url('fonts/Itim-Regular.ttf');
+}
+
+* {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.6rem;
+    color: $primary-text-color;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: $primary-color-dark;
+    margin: 5.0rem 0;
+}
+
+h2 {
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: $primary-color-dark;
+    margin: 2.0rem 0;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    border: 0;
+    outline: 0;
+}

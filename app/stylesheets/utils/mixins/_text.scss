@@ -1,0 +1,11 @@
+@import '../variables';
+
+@mixin text_error {
+    color: $cautious-color-light;
+}
+
+@mixin text_info {
+    font-style: italic;
+    text-align: center;
+    color: $secondary-text-color;
+}

@@ -1,0 +1,7 @@
+@import '../variables';
+
+@mixin link_general {
+    text-decoration: underline;
+    cursor: pointer;
+    color: $primary-color-dark;
+}

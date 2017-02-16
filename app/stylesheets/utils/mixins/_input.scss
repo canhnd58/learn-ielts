@@ -1,0 +1,217 @@
+@import '../variables';
+
+@mixin input_general {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+    border: none;
+    border-bottom: 0.1rem solid $divider-color;
+    &:focus {
+        border-bottom: 0.1rem solid $primary-color;
+    }
+    &[disabled] {
+        background-color: $disabled-color;
+    }
+}
+
+@mixin input_area {
+    display: block;
+    border: 0.1rem solid $divider-color;
+    padding: 1rem 1.5rem;
+    width: 100%;
+    height: 15rem;
+    resize: none;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    &:focus {
+        border: 0.1rem solid $primary-color;
+    }
+}
+
+@mixin input_text($border-color:$divider-color) {
+    @include input-general;
+    display: block;
+    border-bottom: 0.1rem solid $border-color;
+}
+
+@mixin input_search {
+    @include input_general;
+    padding-left: 3rem;
+}
+
+@mixin input_select {
+    @include input_general;
+    padding: 0;
+    padding-left: 1rem;
+    background-color: white;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;
+
+    > option {
+        padding: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+    }
+}
+
+@mixin input_checkbox {
+
+}
+
+@mixin input_date {
+    position: relative;
+    z-index: 300;
+
+    .input-calendar-wrapper {
+        position: absolute;
+        padding: 0.5rem 1.2rem;
+        margin-top: 0.5rem;
+        border: 0.1rem solid $divider-color;
+        box-shadow: 0.2rem 0.2rem $primary-color;
+        background-color: #fff;
+        text-align: center;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .input-calendar-field {
+        @include input_general;
+        @include box_sizing;
+        width: 100%;
+    }
+
+    .input-calendar-field:focus {
+        outline: none;
+    }
+
+    .calendar-icon {
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.7rem;
+    }
+
+    .days, .months, .years {
+        width: 19rem;
+        padding-bottom: 0.2rem;
+    }
+
+    .cell {
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        border: 0.1rem solid #fff;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .cell:hover {
+        color: $accent-color;
+        border: 0.1rem solid $accent-color;
+    }
+
+    .cell.current {
+        background: $accent-color;
+        color: #fff;
+        opacity: .8;
+    }
+
+    .day {
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+
+    .day.prev, .day.next {
+        opacity: .4;
+    }
+
+    .month {
+        width: 5.8rem;
+        height: 3.8rem;
+        line-height: 3.8rem;
+    }
+
+    .year {
+        width: 5.8rem;
+        height: 3.8rem;
+        line-height: 3.8rem;
+    }
+
+    .days-title .cell {
+        height: 2.5rem;
+        line-height: 2.8rem;
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    .days-title .cell:hover {
+        color: #000;
+        border: 0.1rem solid #fff;
+    }
+
+    .navigation-title {
+        width: 10rem;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .years-view .navigation-title {
+        cursor: default;
+    }
+
+    .years-view .navigation-title:hover {
+        color: #000;
+    }
+
+    .navigation-title:hover {
+        color: $accent-color;
+    }
+
+    .icon-wrapper {
+        cursor: pointer;
+    }
+
+    .icon:hover,
+    .today-btn:hover,
+    .icon-wrapper:hover {
+        color: $accent-color;
+    }
+
+    .icon {
+        cursor: pointer;
+        width: 2rem;
+    }
+
+    .today-btn {
+        cursor: pointer;
+    }
+
+    .cell.day.today {
+        position: relative;
+    }
+
+    .cell.day.today:after {
+        content: '.';
+        position: absolute;
+        bottom: 1.5rem;
+        font-size: 2.0rem;
+        color: $primary-color-dark;
+    }
+}

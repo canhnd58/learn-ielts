@@ -1,0 +1,13 @@
+@import '../variables';
+
+@mixin icon_general($symbol, $color) {
+    color: white;
+    border: none;
+    font-style: none;
+    background-color: $color;
+    &:after { content: $symbol; }
+}
+
+@mixin icon_cancel {
+    @include icon_general('x', $cautious-color);
+}
