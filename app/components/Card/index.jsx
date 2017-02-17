@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import CardSingle from './Single'
 import { shuffle, range, array, random } from '../../helper'
 
@@ -25,6 +26,12 @@ class CardPage extends Component {
         }))
     }
 
+    prevCard = () => {
+        this.setState(prevState => ({
+            current: prevState.current == 0 ? 0 : prevState.current - 1
+        }))
+    }
+
     resetCard = data => {
         this.setState({
             indices: shuffle(range(data.length)),
@@ -38,15 +45,19 @@ class CardPage extends Component {
     render() {
         const { data, loading, error } = this.props
         const { current, indices, types } = this.state
+
+        if (data.length == 0) return null
+
         return <div id="card-page">
             {this.noMoreCard() ?
-                <div className="card-single">
+                <div className="card-single" key="out-of-words">
                     Out of words!!!
                 </div> :
-                <CardSingle {...data[indices[current]]} type={types[current]} />
+                <CardSingle key={data[indices[current]]._id} {...data[indices[current]]} type={types[current]} />
             }
-            <button id="card-next-btn" onClick={this.nextCard}>Next</button>
-            <button id="card-reset-btn" onClick={e => this.resetCard(data)}>Reset</button>
+            <button className="card-btn" onClick={this.prevCard}>Prev</button>
+            <button className="card-btn" onClick={this.nextCard}>Next</button>
+            <button className="card-btn" onClick={e => this.resetCard(data)}>Reset</button>
         </div>
     }
 }

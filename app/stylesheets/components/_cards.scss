@@ -20,12 +20,8 @@
         }
     }
 
-    #card-next-btn {
-        @include button_choose;
-    }
-
-    #card-reset-btn {
-        @include button_choose;
+    .card-btn {
+        @include button_new;
         margin-left: 0.5rem;
     }
 }
