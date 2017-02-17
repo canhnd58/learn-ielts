@@ -1,12 +1,14 @@
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import App from './components/App'
-import Card from './components/Card'
+import CategoryList from './components/Category/List'
+import CardList from './components/Card/List'
 
 const getRoutes = store => {
     return <Router history={browserHistory}>
         <Route path="/" component={App}>
-            <IndexRoute component={Card} />
+            <IndexRoute component={CategoryList} />
+            <Route path="categories/:categoryId" component={CardList} />
         </Route>
     </Router>
 }

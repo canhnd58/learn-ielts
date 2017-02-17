@@ -10,7 +10,7 @@ const CardSchema = new Schema({
         trim: true
     },
     category: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Category'
     }
 })

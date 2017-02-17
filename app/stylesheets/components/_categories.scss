@@ -1,0 +1,10 @@
+#category-list {
+    .category-button {
+        @include button_new;
+        font-size: 3.6rem;
+        width: 40rem;
+        display: block;
+        margin: auto;
+        margin-top: 1rem;
+    }
+}

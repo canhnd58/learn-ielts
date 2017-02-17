@@ -1,15 +1,15 @@
 import mongoose, { Schema } from 'mongoose'
 
 const CategorySchema = new Schema({
-    name: {
+    _id: {
         type: String,
         trim: true
     }
-})
+}, { _id: false })
 
 CategorySchema.statics = {
-    creatableAttrs: () => 'name',
-    showableFields: () => 'name'
+    creatableAttrs: () => '_id',
+    showableFields: () => '_id'
 }
 
 export default mongoose.model('Category', CategorySchema)

@@ -1,4 +1,4 @@
-import * as cards from '../actions/cards'
+import * as categories from '../actions/categories'
 
 const defaultState = {
     loading: false,
@@ -6,31 +6,27 @@ const defaultState = {
     error: null
 }
 
-const cardsReducer = (state=defaultState, action) => {
+const categoriesReducer = (state=defaultState, action) => {
     switch(action.type) {
-        case cards.CARD_FETCH_LOADING:
+        case categories.CATEGORY_FETCH_LOADING:
             return Object.assign({}, state, {
                 loading: true,
                 error: null
             })
-        case cards.CARD_FETCH_SUCCESS:
+        case categories.CATEGORY_FETCH_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
                 data: action.data,
                 error: null
             })
-        case cards.CARD_FETCH_ERROR:
+        case categories.CATEGORY_FETCH_ERROR:
             return Object.assign({}, state, {
                 loading: false,
                 error: action.error
-            })
-        case cards.CARD_EMPTY:
-            return Object.assign({}, state, {
-                data: []
             })
         default:
             return state
     }
 }
 
-export default cardsReducer
+export default categoriesReducer
