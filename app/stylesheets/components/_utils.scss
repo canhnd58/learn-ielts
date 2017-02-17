@@ -1,0 +1,31 @@
+.switch-container {
+    height: 2rem;
+    width: 5rem;
+    border: 0.2rem solid $primary-color-dark;
+    border-left: none;
+    border-right: none;
+    background-color: $accent-color-light;
+
+    .switch-slider {
+        @include button_new;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: -0.5rem;
+        left: 0.5rem;
+        height: 3rem;
+        width: 2rem;
+        z-index: 1;
+    }
+
+    .switch-slider-off {
+        @include button_choose;
+        margin: 0;
+        padding: 0;
+        left: 2.2rem;
+    }
+}
+
+.switch-off {
+    background-color: $primary-color-light;
+}

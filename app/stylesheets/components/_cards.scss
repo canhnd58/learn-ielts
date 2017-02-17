@@ -5,6 +5,18 @@
     margin: -10rem 0 0 -20rem;
     text-align: center;
 
+    #card-upper {
+        position: absolute;
+        width: 100%;
+        bottom: 100%;
+        margin-bottom: 1rem;
+
+        .switch-container {
+            position: relative;
+            float: right;
+        }
+    }
+
     .card-single {
         width: 40rem;
         height: 20rem;
@@ -17,6 +29,13 @@
             font-size: inherit;
             width: 8rem;
             height: 8rem;
+        }
+
+        span {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: normal;
+            font-size: inherit;
         }
     }
 

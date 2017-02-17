@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import CardSingle, { NUM_OF_TYPES } from './Single'
+import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
 import { shuffle, range, array, random } from '../../helper'
 
@@ -12,16 +13,21 @@ class CardPage extends Component {
         this.state = {
             indices: [],
             types: [],
-            current: -1
+            current: -1,
+            autoNext: false,
+            autoNextSec: 5
         }
+        this.interval = undefined
     }
 
     componentWillMount() {
         this.props.onFetchCards(this.props.params.categoryId)
     }
 
-    componentWillUnmount() {
-        this.props.onEmptyCards()
+    componentDidMount() {
+        if (this.state.autoNext) {
+            this.interval = setInterval(this.nextCard, this.state.autoNextSec * 1000)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,9 +35,30 @@ class CardPage extends Component {
             this.resetCard(nextProps.data)
     }
 
-    nextCard = () => {
+    componentDidUpdate() {
+        if (this.interval) {
+            clearInterval(this.interval)
+        }
+        if (this.state.autoNext) {
+            this.interval = setInterval(this.nextCard, this.state.autoNextSec * 1000)
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.onEmptyCards()
+        if (this.interval) clearInterval(this.interval)
+    }
+
+    toggleAuto = () => {
         this.setState(prevState => ({
-            current: prevState.current < this.props.data.length - 1 ? prevState.current + 1 : prevState.current
+            autoNext: !prevState.autoNext
+        }))
+    }
+
+    nextCard = () => {
+        if (this.state.current == this.props.data.length - 1) return
+        this.setState(prevState => ({
+            current: prevState.current + 1
         }))
     }
 
@@ -51,13 +78,15 @@ class CardPage extends Component {
 
     render() {
         const { data, loading, error } = this.props
-        const { current, indices, types } = this.state
+        const { current, indices, types, autoNext } = this.state
 
         if (!data || data.length == 0) return null
 
         return <div id="card-list">
             {/*<button className="card-btn" onClick={e => this.resetCard(data)}>Reset</button>*/}
-
+            <div id="card-upper">
+                <Switch on={autoNext} onClick={this.toggleAuto}/>
+            </div>
             <CardSingle key={data[indices[current]]._id} {...data[indices[current]]} type={types[current]} />
             <button className="card-btn" onClick={this.prevCard}>Prev</button>
             <span className="card-index">{`${current+1} / ${data.length}`}</span>
