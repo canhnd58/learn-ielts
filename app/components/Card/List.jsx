@@ -83,21 +83,25 @@ class CardPage extends Component {
         if (!data || data.length == 0) return null
 
         return <div id="card-list">
-            {/*<button className="card-btn" onClick={e => this.resetCard(data)}>Reset</button>*/}
             <div id="card-upper">
                 <Switch on={autoNext} text={"Auto"} onClick={this.toggleAuto}/>
-                <div className="card-quit-btn" onClick={browserHistory.goBack}>
+                <div className="card-upper-btn" onClick={browserHistory.goBack}>
                     <i className="fa fa-reply-all" aria-hidden="true"></i>
+                </div>
+                <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
+                    <i className="fa fa-refresh" aria-hidden="true"></i>
                 </div>
             </div>
             <CardSingle key={data[indices[current]]._id} {...data[indices[current]]} type={types[current]} />
-            <button className="card-btn" onClick={this.prevCard}>
-                <i className="fa fa-chevron-left" aria-hidden="true"></i>
-            </button>
-            <span className="card-index">{`${current+1} / ${data.length}`}</span>
-            <button className="card-btn" onClick={this.nextCard}>
-                <i className="fa fa-chevron-right" aria-hidden="true"></i>
-            </button>
+            <div id="card-lower">
+                <button className="card-lower-btn" onClick={this.prevCard}>
+                    <i className="fa fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <span className="card-index">{`${current+1} / ${data.length}`}</span>
+                <button className="card-lower-btn" onClick={this.nextCard}>
+                    <i className="fa fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     }
 }

@@ -8,9 +8,9 @@ class CategoryButton extends Component {
 
     render() {
         const { _id } = this.props
-        return <button className="category-button" onClick={this.handleClick}>
+        return <div className="category-button" onClick={this.handleClick}>
             {_id}
-        </button>
+        </div>
     }
 }
 

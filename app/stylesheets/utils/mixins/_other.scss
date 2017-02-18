@@ -3,3 +3,9 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
+
+@mixin transform ($s) {
+    transform: $s;
+    -ms-transform: $s;
+    -webkit-transform: $s;
+}

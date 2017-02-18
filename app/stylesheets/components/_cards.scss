@@ -2,24 +2,24 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -10rem 0 0 -20rem;
+    width: 90%;
+    max-width: 50rem;
+    @include transform(translate(-50%, -50%));
     text-align: center;
 
     #card-upper {
-        position: absolute;
-        width: 100%;
-        bottom: 100%;
+        position: relative;
         margin-bottom: 0.5rem;
+        text-align: left;
 
-        .card-quit-btn {
+        .card-upper-btn {
             @include button_simple;
+            display: inline-block;
+            margin-right: 1rem;
             i {
                 color: $primary-color;
                 vertical-align: bottom;
             }
-            position: absolute;
-            bottom: 0;
-            left: 0;
         }
 
         .switch-container {
@@ -30,7 +30,9 @@
     }
 
     .card-single {
-        width: 40rem;
+        position: relative;
+        width: 100%;
+        overflow: none;
         height: 20rem;
         line-height: 20rem;
         font-size: 3.6rem;
@@ -51,16 +53,21 @@
         }
     }
 
-    .card-btn {
-        @include button_new;
-        margin-left: 0.5rem;
-        padding: 0.5rem 2rem;
-        i { color: white; }
-    }
+    #card-lower {
+        position: relative;
 
-    .card-index {
-        display: inline-block;
-        width: 10rem;
-        margin-left: 0.5rem;
+        .card-lower-btn {
+            @include button_new;
+            margin-left: 0.5rem;
+            padding: 0.5rem 0;
+            width: 25%;
+            i { color: white; }
+        }
+
+        .card-index {
+            display: inline-block;
+            width: 40%;
+            margin-left: 0.5rem;
+        }
     }
 }
