@@ -21,14 +21,22 @@ class Switch extends Component {
     }
 
     render() {
-        const switchClass = classnames('switch-container', {
-            'switch-off': !this.state.on
-        })
         const sliderClass = classnames('switch-slider', {
             'switch-slider-off': !this.state.on
         })
-        return <div className={switchClass} onClick={this.handleOnClick}>
-            <div className={sliderClass}></div>
+        const sliderButtonClass = classnames('switch-slider-button', {
+            'switch-slider-button-off': !this.state.on
+        })
+        const textClass = classnames('switch-text', {
+            'switch-text-off': !this.state.on
+        })
+        return <div className="switch-container" onClick={this.handleOnClick}>
+            <div className={textClass}>
+                {this.props.text}
+            </div>
+            <div className={sliderClass}>
+                <div className={sliderButtonClass}></div>
+            </div>
         </div>
     }
 }

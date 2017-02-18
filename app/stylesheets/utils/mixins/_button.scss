@@ -76,3 +76,10 @@
         transform: translate(0.1rem, 0.1rem);
     }
 }
+
+@mixin button_simple {
+    cursor: pointer;
+    &:active {
+        transform: translate(0.1rem, 0.1rem);
+    }
+}

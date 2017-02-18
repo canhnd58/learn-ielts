@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { browserHistory } from'react-router'
 import CardSingle, { NUM_OF_TYPES } from './Single'
 import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
@@ -85,12 +85,19 @@ class CardPage extends Component {
         return <div id="card-list">
             {/*<button className="card-btn" onClick={e => this.resetCard(data)}>Reset</button>*/}
             <div id="card-upper">
-                <Switch on={autoNext} onClick={this.toggleAuto}/>
+                <Switch on={autoNext} text={"Auto"} onClick={this.toggleAuto}/>
+                <div className="card-quit-btn" onClick={browserHistory.goBack}>
+                    <i className="fa fa-reply-all" aria-hidden="true"></i>
+                </div>
             </div>
             <CardSingle key={data[indices[current]]._id} {...data[indices[current]]} type={types[current]} />
-            <button className="card-btn" onClick={this.prevCard}>Prev</button>
+            <button className="card-btn" onClick={this.prevCard}>
+                <i className="fa fa-chevron-left" aria-hidden="true"></i>
+            </button>
             <span className="card-index">{`${current+1} / ${data.length}`}</span>
-            <button className="card-btn" onClick={this.nextCard}>Next</button>
+            <button className="card-btn" onClick={this.nextCard}>
+                <i className="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
         </div>
     }
 }

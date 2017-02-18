@@ -9,11 +9,23 @@
         position: absolute;
         width: 100%;
         bottom: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+
+        .card-quit-btn {
+            @include button_simple;
+            i {
+                color: $primary-color;
+                vertical-align: bottom;
+            }
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
 
         .switch-container {
-            position: relative;
-            float: right;
+            position: absolute;
+            right: 0;
+            bottom: 0;
         }
     }
 
@@ -42,6 +54,8 @@
     .card-btn {
         @include button_new;
         margin-left: 0.5rem;
+        padding: 0.5rem 2rem;
+        i { color: white; }
     }
 
     .card-index {
