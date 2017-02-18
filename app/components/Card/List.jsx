@@ -15,7 +15,8 @@ class CardPage extends Component {
             types: [],
             current: -1,
             autoNext: false,
-            autoNextSec: 5
+            maxSec: 5,
+            currentSec: 5
         }
         this.interval = undefined
     }
@@ -25,9 +26,7 @@ class CardPage extends Component {
     }
 
     componentDidMount() {
-        if (this.state.autoNext) {
-            this.interval = setInterval(this.nextCard, this.state.autoNextSec * 1000)
-        }
+        this.resetInterval()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,18 +34,33 @@ class CardPage extends Component {
             this.resetCard(nextProps.data)
     }
 
-    componentDidUpdate() {
-        if (this.interval) {
-            clearInterval(this.interval)
-        }
-        if (this.state.autoNext) {
-            this.interval = setInterval(this.nextCard, this.state.autoNextSec * 1000)
-        }
+    componentDidUpdate(prevProps, prevState) {
+        // Don't reset interval when counting down sec
+        if (this.state.currentSec == prevState.currentSec)
+            this.resetInterval()
     }
 
     componentWillUnmount() {
         this.props.onEmptyCards()
         if (this.interval) clearInterval(this.interval)
+    }
+
+    resetInterval = () => {
+        const { autoNext, currentSec, maxSec } = this.state
+        if (this.interval) {
+            clearInterval(this.interval)
+        }
+        if (currentSec != maxSec) this.setState({ currentSec: maxSec })
+        if (autoNext) {
+            this.interval = setInterval(() => {
+                if (this.state.currentSec <= 0) this.nextCard()
+                else {
+                    this.setState(prevState => ({
+                        currentSec: prevState.currentSec - 1
+                    }))
+                }
+            }, 1000)
+        }
     }
 
     toggleAuto = () => {
@@ -56,15 +70,15 @@ class CardPage extends Component {
     }
 
     nextCard = () => {
-        if (this.state.current == this.props.data.length - 1) return
         this.setState(prevState => ({
-            current: prevState.current + 1
+            current: (prevState.current + 1) % this.props.data.length
         }))
     }
 
     prevCard = () => {
+        const { data } = this.props
         this.setState(prevState => ({
-            current: prevState.current == 0 ? 0 : prevState.current - 1
+            current: (prevState.current + data.length - 1) % data.length
         }))
     }
 
@@ -78,13 +92,13 @@ class CardPage extends Component {
 
     render() {
         const { data, loading, error } = this.props
-        const { current, indices, types, autoNext } = this.state
+        const { current, indices, types, autoNext, currentSec } = this.state
 
         if (!data || data.length == 0) return null
 
         return <div id="card-list">
             <div id="card-upper">
-                <Switch on={autoNext} text={"Auto"} onClick={this.toggleAuto}/>
+                <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>
                 <div className="card-upper-btn" onClick={browserHistory.goBack}>
                     <i className="fa fa-reply-all" aria-hidden="true"></i>
                 </div>
@@ -92,7 +106,12 @@ class CardPage extends Component {
                     <i className="fa fa-refresh" aria-hidden="true"></i>
                 </div>
             </div>
-            <CardSingle key={data[indices[current]]._id} {...data[indices[current]]} type={types[current]} />
+            <CardSingle
+                key={data[indices[current]]._id}
+                {...data[indices[current]]}
+                type={types[current]}
+                onClick={this.resetInterval}
+            />
             <div id="card-lower">
                 <button className="card-lower-btn" onClick={this.prevCard}>
                     <i className="fa fa-chevron-left" aria-hidden="true"></i>
