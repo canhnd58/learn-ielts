@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+export const SPEAK_INTERVAL = 5
 export const NUM_OF_TYPES = 3
 export const TYPES = {
     ENG: 0,
@@ -11,11 +12,18 @@ class CardSingle extends Component {
     constructor(props) {
         super(props)
         this.state = { type: this.props.type }
+        this.interval = undefined
     }
 
     componentDidMount() {
-        if (this.state.type == TYPES["SOUND"])
+        if (this.state.type == TYPES["SOUND"]) {
             this.speak()
+            this.resetInterval()
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.interval) clearInterval(this.interval)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -23,8 +31,15 @@ class CardSingle extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.type == TYPES["SOUND"])
+        if (this.state.type == TYPES["SOUND"]) {
             this.speak()
+            this.resetInterval()
+        }
+    }
+
+    resetInterval = () => {
+        if (this.interval) clearInterval(this.interval)
+        this.interval = setInterval(this.speak, 1000 * SPEAK_INTERVAL)
     }
 
     flip = () => {

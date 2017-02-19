@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from'react-router'
-import CardSingle, { NUM_OF_TYPES } from './Single'
+import CardSingle, { TYPES, NUM_OF_TYPES } from './Single'
 import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
 import { shuffle, range, array, random } from '../../helper'
@@ -15,8 +15,9 @@ class CardPage extends Component {
             types: [],
             current: -1,
             autoNext: false,
-            maxSec: 5,
-            currentSec: 5
+            maxSec: 13,
+            currentSec: 5,
+            mode: 0
         }
         this.interval = undefined
     }
@@ -69,6 +70,14 @@ class CardPage extends Component {
         }))
     }
 
+    changeMode = () => {
+        this.setState(prevState => {
+            let mode = prevState.mode + 1
+            if (mode == NUM_OF_TYPES) mode = -1
+            return { mode }
+        }, () => this.resetCard(this.props.data))
+    }
+
     nextCard = () => {
         this.setState(prevState => ({
             current: (prevState.current + 1) % this.props.data.length
@@ -83,9 +92,10 @@ class CardPage extends Component {
     }
 
     resetCard = data => {
+        const { mode } = this.state
         this.setState({
             indices: shuffle(range(data.length)),
-            types: array(data.length, () => random(NUM_OF_TYPES)),
+            types: array(data.length, () => mode == -1 ? random(NUM_OF_TYPES) : mode),
             current: 0
         })
     }
@@ -104,6 +114,9 @@ class CardPage extends Component {
                 </div>
                 <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
                     <i className="fa fa-refresh" aria-hidden="true"></i>
+                </div>
+                <div className="card-upper-btn" onClick={this.changeMode}>
+                    Change
                 </div>
             </div>
             <CardSingle
