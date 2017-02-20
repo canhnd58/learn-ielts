@@ -25,7 +25,8 @@ class CardPage extends Component {
     }
 
     componentWillMount() {
-        this.props.onFetchCards(this.props.params.categoryId)
+        const { currentCategories, onFetchCards } = this.props
+        currentCategories.forEach(c => onFetchCards(c))
     }
 
     componentDidMount() {
@@ -158,7 +159,10 @@ class CardPage extends Component {
 }
 
 export default connect(
-    state => state.cards,
+    state => ({
+        ...state.cards,
+        currentCategories: state.categories.current
+    }),
     dispatch => ({
         onFetchCards: (categoryId) => dispatch(fetchCards(categoryId)),
         onEmptyCards: () => dispatch(emptyCards())
