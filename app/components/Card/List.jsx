@@ -150,6 +150,7 @@ class CardPage extends Component {
             { showResult &&
                 <CardTable
                     {...this.props}
+                    indices={indices}
                     backToCardList={this.toggleResult}
                 /> }
         </div>

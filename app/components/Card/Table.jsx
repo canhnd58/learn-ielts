@@ -38,7 +38,7 @@ class CardTable extends Component {
     }
 
     render() {
-        const { loading, data, error, backToCardList } = this.props
+        const { loading, data, error, indices, backToCardList } = this.props
         const { currentPage } = this.state
         const startIndex = NUM_OF_ROWS * currentPage
         const endIndex = NUM_OF_ROWS * (currentPage + 1)
@@ -50,7 +50,7 @@ class CardTable extends Component {
                 </div>
             </div>
             <div id="card-table-content">
-                {data.slice(startIndex, endIndex).map((d, i) => <CardRow key={d._id} {...d} idx={startIndex + i + 1} />)}
+                {indices.slice(startIndex, endIndex).map((index, i) => <CardRow key={data[index]._id} {...data[index]} idx={startIndex + i + 1} />)}
             </div>
             <div id="card-table-lower">
                 <button className="card-table-lower-btn" onClick={this.prevPage}>
