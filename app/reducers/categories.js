@@ -27,7 +27,6 @@ const categoriesReducer = (state=defaultState, action) => {
                 error: action.error
             })
         case categories.CATEGORY_SET:
-            localStorage.setItem('current', JSON.stringify(action.data))
             return {
                 ...state,
                 current: action.data
