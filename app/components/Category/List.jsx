@@ -20,7 +20,7 @@ class CategoryList extends Component {
         })
     }
 
-    toggleCheck = i => e => {
+    toggleCheck = i => {
         this.setState(prevState => {
             let checked = [...prevState.checked]
             checked[i] = !checked[i]
@@ -47,7 +47,7 @@ class CategoryList extends Component {
 
         return <div id="category-list">
             { data.map((d, i) =>
-                <CategoryCheckbox key={d._id} {...d} isCheck={checked[i]} toggle={this.toggleCheck(i)} /> )}
+                <CategoryCheckbox key={d._id} {...d} isCheck={checked[i]} toggle={e => this.toggleCheck(i)} /> )}
             { checked.indexOf(true) != -1 &&
                 <div className="category-button" onClick={this.setCategories}>Start the Test</div> }
         </div>

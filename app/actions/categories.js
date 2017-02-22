@@ -23,6 +23,6 @@ export const fetchCategories = () => dispatch => {
 export const getCurrentCategories = (data) => dispatch => dispatch({ type: CATEGORY_GET_CURRENT, data})
 
 export const setCategories = (data) => dispatch => {
-    localStorage.setItem('current', JSON.stringify(data))
+    localStorage.setItem('currentCategories', JSON.stringify(data))
     return dispatch({ type: CATEGORY_SET, data })
 }
