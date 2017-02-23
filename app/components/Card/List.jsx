@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from'react-router'
 import CardSingle, { TYPES, NUM_OF_TYPES } from './Single'
 import CardToggleMode from './ToggleMode'
+import CardTable from './Table'
 import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
 import { shuffle, range, array, random } from '../../helper'
@@ -18,13 +19,15 @@ class CardPage extends Component {
             autoNext: false,
             maxSec: 13,
             currentSec: 5,
-            mode: 0
+            mode: 0,
+            showResult: false
         }
         this.interval = undefined
     }
 
     componentWillMount() {
-        this.props.onFetchCards(this.props.params.categoryId)
+        const { currentCategories, onFetchCards } = this.props
+        currentCategories.forEach(c => onFetchCards(c))
     }
 
     componentDidMount() {
@@ -101,50 +104,69 @@ class CardPage extends Component {
         })
     }
 
+    toggleResult = () => {
+        this.setState(prevState => ({
+            showResult: !prevState.showResult
+        }))
+    }
+
     render() {
         const { data, loading, error } = this.props
-        const { current, indices, types, autoNext, currentSec, mode } = this.state
+        const { current, indices, types, autoNext, currentSec, showResult, mode } = this.state
 
         if (!data || data.length == 0) return null
 
-        return <div id="card-list">
-            <div id="card-upper">
-                <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>
-                <div className="card-upper-btn" onClick={browserHistory.goBack}>
-                    <i className="fa fa-reply-all" aria-hidden="true"></i>
+        return <div>
+            <div id="card-list">
+                <div id="card-upper">
+                    <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>
+                    <div className="card-upper-btn" onClick={browserHistory.goBack}>
+                        <i className="fa fa-reply-all" aria-hidden="true"></i>
+                    </div>
+                    <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
+                        <i className="fa fa-refresh" aria-hidden="true"></i>
+                    </div>
+                    <CardToggleMode
+                        mode={mode}
+                        changeMode={this.changeMode}
+                    />
+                    <div className="card-upper-btn" onClick={this.toggleResult}>
+                        <i className="fa fa-list-ul" aria-hidden="true"></i>
+                    </div>
                 </div>
-                <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
-                    <i className="fa fa-refresh" aria-hidden="true"></i>
-                </div>
-                <CardToggleMode
-                    mode={mode}
-                    changeMode={this.changeMode}
+                <CardSingle
+                    key={data[indices[current]]._id}
+                    {...data[indices[current]]}
+                    type={types[current]}
+                    onClick={this.resetInterval}
                 />
+                <div id="card-lower">
+                    <button className="card-lower-btn" onClick={this.prevCard}>
+                        <i className="fa fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <span className="card-index">{`${current+1} / ${data.length}`}</span>
+                    <button className="card-lower-btn" onClick={this.nextCard}>
+                        <i className="fa fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <CardSingle
-                key={data[indices[current]]._id}
-                {...data[indices[current]]}
-                type={types[current]}
-                onClick={this.resetInterval}
-            />
-            <div id="card-lower">
-                <button className="card-lower-btn" onClick={this.prevCard}>
-                    <i className="fa fa-chevron-left" aria-hidden="true"></i>
-                </button>
-                <span className="card-index">{`${current+1} / ${data.length}`}</span>
-                <button className="card-lower-btn" onClick={this.nextCard}>
-                    <i className="fa fa-chevron-right" aria-hidden="true"></i>
-                </button>
-            </div>
+            { showResult &&
+                <CardTable
+                    {...this.props}
+                    indices={indices}
+                    backToCardList={this.toggleResult}
+                /> }
         </div>
     }
 }
 
 export default connect(
-    state => state.cards,
+    state => ({
+        ...state.cards,
+        currentCategories: state.categories.current
+    }),
     dispatch => ({
         onFetchCards: (categoryId) => dispatch(fetchCards(categoryId)),
         onEmptyCards: () => dispatch(emptyCards())
     }))
 (CardPage)
-

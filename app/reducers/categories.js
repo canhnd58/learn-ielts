@@ -1,8 +1,10 @@
 import * as categories from '../actions/categories'
+import * as cards from '../actions/cards'
 
 const defaultState = {
     loading: false,
     data: [],
+    current: [],
     error: null
 }
 
@@ -24,6 +26,21 @@ const categoriesReducer = (state=defaultState, action) => {
                 loading: false,
                 error: action.error
             })
+        case categories.CATEGORY_SET:
+            return {
+                ...state,
+                current: action.data
+            }
+        case categories.CATEGORY_GET_CURRENT:
+            return {
+                ...state,
+                current: action.data
+            }
+        case cards.CARD_EMPTY:
+            return {
+                ...state,
+                current: []
+            }
         default:
             return state
     }

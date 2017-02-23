@@ -6,15 +6,30 @@
     left: 50%;
     @include transform(translate(-50%, -50%));
 
-    .category-button {
+    .category-row {
         @include button_simple;
         text-align: center;
-        font-size: 3.6rem;
         display: block;
         margin: auto;
         margin-top: 1rem;
 
         &:active {
         }
+
+        .category-checkbox {
+            display: inline-block;
+            margin-right: 2rem;
+        }
+
+        .category-name {
+            display: inline-block;
+            font-size: 3.6rem;
+        }
+    }
+
+    .category-button {
+        @include button_new;
+        margin-top: 5rem;
+        text-align: center;
     }
 }

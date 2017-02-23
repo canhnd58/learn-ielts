@@ -8,7 +8,7 @@ const getRoutes = store => {
     return <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={CategoryList} />
-            <Route path="categories/:categoryId" component={CardList} />
+            <Route path="cards" component={CardList} />
         </Route>
     </Router>
 }

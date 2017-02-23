@@ -16,7 +16,7 @@ const cardsReducer = (state=defaultState, action) => {
         case cards.CARD_FETCH_SUCCESS:
             return Object.assign({}, state, {
                 loading: false,
-                data: action.data,
+                data: [...state.data].concat(action.data),
                 error: null
             })
         case cards.CARD_FETCH_ERROR:

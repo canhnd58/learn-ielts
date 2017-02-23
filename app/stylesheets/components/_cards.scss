@@ -20,9 +20,17 @@
                 color: $primary-color;
                 vertical-align: bottom;
             }
+        }
 
-            #mode-name {
-                color: $accent-color
+        #mode-icon {
+            width: 26px;
+            text-align: center;
+            span {  
+                color: $primary-color;
+                font-size: 3rem;
+                vertical-align: bottom;;
+                line-height: 1;
+                font-weight: bold;
             }
         }
 
@@ -40,6 +48,7 @@
         height: 20rem;
         line-height: 20rem;
         font-size: 3.6rem;
+        @include box-sizing;
         border: 0.2rem solid $primary-color-dark;
 
         .card-sound-btn {
@@ -72,6 +81,77 @@
             display: inline-block;
             width: 40%;
             margin-left: 0.5rem;
+        }
+    }
+}
+
+#card-table {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    max-width: 50rem;
+    background-color: white;
+    border: 0.2rem solid $primary-color-dark;
+    @include box-sizing;
+    @include transform(translate(-50%, -50%));
+    z-index: 1;
+
+    #card-table-upper {
+        position: relative;
+        margin-bottom: 0.5rem;
+        text-align: left;
+
+        .card-upper-btn {
+            @include button_simple;
+            display: inline-block;
+            margin-right: 1rem;
+            i {
+                color: $primary-color;
+                vertical-align: bottom;
+            }
+        }
+    }
+
+    .card-row {
+        text-align: left;
+        height: 70%;
+
+        .card-row-cell {
+            display: inline-block;
+        }
+
+        .card-row-idx {
+            margin-left: 3%;
+            width: 10%;
+        }
+
+        .card-row-eng {
+            width: 45%;
+            margin-right: 3%;
+        }
+
+        .card-row-vi {
+            width: 35%;
+            margin-right: 3%;
+            vertical-align: text-top;
+        }
+    }
+
+    #card-table-lower {
+        position: absolute;
+        width: 100%;
+        bottom: 5%;
+        margin-top: 2rem;
+        text-align: center;
+
+        .card-table-lower-btn {
+            @include button_new;
+            margin-left: 0.5rem;
+            padding: 0.5rem 0;
+            width: 25%;
+            i { color: white; }
         }
     }
 }
