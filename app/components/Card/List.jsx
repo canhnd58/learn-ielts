@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from'react-router'
-import CardSingle, { TYPES, NUM_OF_TYPES } from './Single'
+import CardSingle, { TYPES } from './Single'
 import CardToggleMode from './ToggleMode'
 import CardTable from './Table'
 import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
-import { shuffle, range, array, random } from '../../helper'
+import { shuffle, range, array, random, getKey } from '../../helper'
+
+export const MODES = {
+    random: 0,
+    eng: 1,
+    vi: 2,
+    sound: 3
+}
 
 class CardPage extends Component {
 
@@ -19,7 +26,7 @@ class CardPage extends Component {
             autoNext: false,
             maxSec: 13,
             currentSec: 5,
-            mode: 0,
+            mode: MODES['eng'],
             showResult: false
         }
         this.interval = undefined
@@ -75,11 +82,9 @@ class CardPage extends Component {
     }
 
     changeMode = () => {
-        this.setState(prevState => {
-            let mode = prevState.mode + 1
-            if (mode == NUM_OF_TYPES) mode = -1
-            return { mode }
-        }, () => this.resetCard(this.props.data))
+        this.setState(prevState => ({
+            mode: (prevState.mode + 1) % Object.keys(MODES).length
+        }), () => this.resetCard(this.props.data))
     }
 
     nextCard = () => {
@@ -96,11 +101,24 @@ class CardPage extends Component {
     }
 
     resetCard = data => {
-        const { mode } = this.state
-        this.setState({
-            indices: shuffle(range(data.length)),
-            types: array(data.length, () => mode == -1 ? random(NUM_OF_TYPES) : mode),
-            current: 0
+        this.setState(prevState => {
+            const setCardType = () => {
+                const modeKeys = Object.keys(MODES)
+                const { mode } = prevState
+                if (mode != MODES['random'])
+                    return TYPES[getKey(MODES, mode)]
+
+                let key = 'random'
+                while (key == 'random')
+                    key = modeKeys[random(modeKeys.length)]
+                return TYPES[key]
+            }
+
+            return {
+                indices: shuffle(range(data.length)),
+                types: array(data.length, setCardType),
+                current: 0
+            }
         })
     }
 
@@ -116,7 +134,7 @@ class CardPage extends Component {
 
         if (!data || data.length == 0) return null
 
-        return <div>
+        return <div id="card-container">
             <div id="card-list">
                 <div id="card-upper">
                     <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>

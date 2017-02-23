@@ -3,11 +3,18 @@ import mongoose, { Schema } from 'mongoose'
 const CardSchema = new Schema({
     eng: {
         type: String,
-        trim: true
+        trim: true,
+        lowercase: true
     },
     vi: {
         type: String,
-        trim: true
+        trim: true,
+        lowercase: true
+    },
+    example: {
+        type: String,
+        trim: true,
+        default: '[No example]'
     },
     category: {
         type: String,
@@ -16,8 +23,8 @@ const CardSchema = new Schema({
 })
 
 CardSchema.statics = {
-    creatableFields: () => 'eng vi category',
-    showableFields: () => 'eng vi'
+    creatableFields: () => 'eng vi example category',
+    showableFields: () => 'eng vi example'
 }
 
 export default mongoose.model('Card', CardSchema)

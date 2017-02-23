@@ -19,3 +19,11 @@ export const range = n => {
 export const array = (n, func) => {
     return Array(n).fill().map(x => func())
 }
+
+export const getKey = (o, v) => {
+    const keys = Object.keys(o)
+    for (let i = 0; i < keys.length; i++) {
+        if (o[keys[i]] == v) return keys[i]
+    }
+    return null
+}

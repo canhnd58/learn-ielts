@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
 export const SPEAK_INTERVAL = 5
-export const NUM_OF_TYPES = 3
 export const TYPES = {
-    ENG: 0,
-    VI: 1,
-    SOUND: 2
+    eng: 0,
+    example: 1,
+    vi: 2,
+    sound: 3
 }
 
 class CardSingle extends Component {
@@ -16,7 +16,7 @@ class CardSingle extends Component {
     }
 
     componentDidMount() {
-        if (this.state.type == TYPES["SOUND"]) {
+        if (this.state.type == TYPES["sound"]) {
             this.speak()
             this.resetInterval()
         }
@@ -31,7 +31,7 @@ class CardSingle extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.type == TYPES["SOUND"]) {
+        if (this.state.type == TYPES["sound"]) {
             this.speak()
             this.resetInterval()
         }
@@ -44,7 +44,7 @@ class CardSingle extends Component {
 
     flip = () => {
         this.setState(prevState => ({
-            type: (prevState.type + 1) % NUM_OF_TYPES
+            type: (prevState.type + 1) % Object.keys(TYPES).length
         }))
     }
 
@@ -62,12 +62,13 @@ class CardSingle extends Component {
     }
 
     render() {
-        const { _id, eng, vi } = this.props
+        const { _id, eng, vi, example } = this.props
         const { type } = this.state
         return <div className="card-single" onClick={e => {this.flip(); this.mayTriggerOnClick()}}>
-            {type == TYPES["ENG"] && <span>{eng}</span>}
-            {type == TYPES["VI"] && <span>{vi}</span>}
-            {type == TYPES["SOUND"] &&
+            {type == TYPES["eng"] && <span>{eng}</span>}
+            {type == TYPES["vi"] && <span>{vi}</span>}
+            {type == TYPES["example"] && <span>{example}</span>}
+            {type == TYPES["sound"] &&
                 <button className="card-sound-btn" onClick={e => {this.speak(e); this.mayTriggerOnClick()}}>
                     <i className="fa fa-volume-up" aria-hidden="true"></i>
                 </button>
