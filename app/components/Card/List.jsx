@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from'react-router'
 import CardSingle, { TYPES, NUM_OF_TYPES } from './Single'
+import CardToggleMode from './ToggleMode'
 import Switch from '../Util/Switch'
 import { fetchCards, emptyCards } from '../../actions/cards'
 import { shuffle, range, array, random } from '../../helper'
@@ -102,7 +103,7 @@ class CardPage extends Component {
 
     render() {
         const { data, loading, error } = this.props
-        const { current, indices, types, autoNext, currentSec } = this.state
+        const { current, indices, types, autoNext, currentSec, mode } = this.state
 
         if (!data || data.length == 0) return null
 
@@ -115,9 +116,10 @@ class CardPage extends Component {
                 <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
                     <i className="fa fa-refresh" aria-hidden="true"></i>
                 </div>
-                <div className="card-upper-btn" onClick={this.changeMode}>
-                    Change
-                </div>
+                <CardToggleMode
+                    mode={mode}
+                    changeMode={this.changeMode}
+                />
             </div>
             <CardSingle
                 key={data[indices[current]]._id}

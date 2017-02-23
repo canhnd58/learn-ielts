@@ -20,6 +20,10 @@
                 color: $primary-color;
                 vertical-align: bottom;
             }
+
+            #mode-name {
+                color: $accent-color
+            }
         }
 
         .switch-container {
