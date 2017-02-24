@@ -23,7 +23,7 @@ class CardSingle extends Component {
     }
 
     componentWillUnmount() {
-        if (this.interval) clearInterval(this.interval)
+        this.clearInterval()
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -34,11 +34,17 @@ class CardSingle extends Component {
         if (this.state.type == TYPES["sound"]) {
             this.speak()
             this.resetInterval()
+        } else {
+            this.clearInterval()
         }
     }
 
-    resetInterval = () => {
+    clearInterval = () => {
         if (this.interval) clearInterval(this.interval)
+    }
+
+    resetInterval = () => {
+        this.clearInterval()
         this.interval = setInterval(this.speak, 1000 * SPEAK_INTERVAL)
     }
 
