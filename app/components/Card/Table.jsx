@@ -11,6 +11,7 @@ class CardTable extends Component {
             currentPage: 0
         }
         this.pageNum = parseInt(props.data.length / NUM_OF_ROWS)
+        if (props.data.length % NUM_OF_ROWS != 0) this.pageNum++
     }
 
     prevPage = () => {
