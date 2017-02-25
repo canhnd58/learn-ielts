@@ -30,6 +30,7 @@ class CardPage extends Component {
             showResult: false
         }
         this.interval = undefined
+        this.sound = new Audio('/sounds/beep.mp3')
     }
 
     componentWillMount() {
@@ -65,7 +66,10 @@ class CardPage extends Component {
         if (currentSec != maxSec) this.setState({ currentSec: maxSec })
         if (autoNext) {
             this.interval = setInterval(() => {
-                if (this.state.currentSec <= 0) this.nextCard()
+                if (this.state.currentSec <= 0) {
+                    this.sound.play()
+                    this.nextCard()
+                }
                 else {
                     this.setState(prevState => ({
                         currentSec: prevState.currentSec - 1
