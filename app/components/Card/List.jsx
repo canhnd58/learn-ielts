@@ -138,7 +138,7 @@ class CardPage extends Component {
             <div id="card-list">
                 <div id="card-upper">
                     <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>
-                    <div className="card-upper-btn" onClick={browserHistory.goBack}>
+                    <div className="card-upper-btn" onClick={e => browserHistory.push('/')}>
                         <i className="fa fa-reply-all" aria-hidden="true"></i>
                     </div>
                     <div className="card-upper-btn" onClick={e => this.resetCard(data)}>
