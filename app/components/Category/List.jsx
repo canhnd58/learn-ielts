@@ -38,7 +38,6 @@ class CategoryList extends Component {
         })
 
         onSetCategories(categories)
-        browserHistory.push('/cards')
     }
 
     render() {
@@ -46,10 +45,13 @@ class CategoryList extends Component {
         const { checked } = this.state
 
         return <div id="category-list">
-            { data.map((d, i) =>
+            {data.map((d, i) =>
                 <CategoryCheckbox key={d._id} {...d} isCheck={checked[i]} toggle={e => this.toggleCheck(i)} /> )}
-            { checked.indexOf(true) != -1 &&
-                <div className="category-button" onClick={this.setCategories}>Start the Test</div> }
+            {checked.indexOf(true) != -1 &&
+                <div>
+                    <div className="category-button" onClick={e => {this.setCategories(); browserHistory.push('/cards')}}>Start the Test</div>
+                    <div className="category-button" onClick={e => {this.setCategories(); browserHistory.push('/test')}}>Test</div>
+                </div>}
         </div>
     }
 }
