@@ -30,7 +30,7 @@ class CardPage extends Component {
             showResult: false
         }
         this.interval = undefined
-        this.sound = new Audio('/sounds/beep.mp3')
+        this.sound = new Audio('/sounds/pop.mp3')
     }
 
     componentWillMount() {
