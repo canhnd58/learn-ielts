@@ -132,16 +132,26 @@ class CardPage extends Component {
         }))
     }
 
+    changeMaxSec = maxSec => {
+        this.setState({ maxSec })
+    }
+
     render() {
         const { data, loading, error } = this.props
-        const { current, indices, types, autoNext, currentSec, showResult, mode } = this.state
+        const { current, indices, types, autoNext, currentSec, maxSec, showResult, mode } = this.state
 
         if (!data || data.length == 0) return null
 
         return <div id="card-container">
             <div id="card-list">
                 <div id="card-upper">
-                    <Switch on={autoNext} text={autoNext ? `${currentSec}`  : 'Off'} onClick={this.toggleAuto}/>
+                    <Switch
+                        on={autoNext}
+                        maxSec={maxSec}
+                        text={autoNext ? `${currentSec}`  : 'Off'}
+                        onClick={this.toggleAuto}
+                        changeMaxSec={this.changeMaxSec}
+                    />
                     <div className="card-upper-btn" onClick={e => browserHistory.push('/')}>
                         <i className="fa fa-reply-all" aria-hidden="true"></i>
                     </div>
