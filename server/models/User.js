@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import only from 'only'
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
 import { SECRET_KEY } from '../config'
@@ -35,7 +36,7 @@ UserSchema.methods = {
 UserSchema.statics = {
     creatableFields: () => 'uname passwd',
     updatableFields: () => 'passwd',
-    showableFields: () => 'uname',
+    showableFields: () => 'uname _id',
     encryptPassword: pass => bcrypt.hashSync(pass, bcrypt.genSaltSync(8), null)
 }
 

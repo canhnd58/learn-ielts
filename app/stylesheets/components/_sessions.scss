@@ -1,0 +1,32 @@
+#login-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+    text-align: center;
+    padding: 2rem;
+    border: 0.1rem solid $primary-color;
+
+    input {
+        display: block;
+        width: 30rem;
+        border: none;
+        border-bottom: 0.1rem solid $primary-color-dark;
+        padding: 0.5rem 1rem;
+    }
+
+    .error {
+        padding: 0.5rem 1rem;
+        font-size: 1.6rem;
+        color: red;
+    }
+
+    button {
+        display: inline-block;
+    }
+
+    .login-button {
+        @include button_new;
+        width: 100%;
+    }
+}

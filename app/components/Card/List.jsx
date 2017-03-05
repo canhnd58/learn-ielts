@@ -152,7 +152,7 @@ class CardPage extends Component {
                         onClick={this.toggleAuto}
                         changeMaxSec={this.changeMaxSec}
                     />
-                    <div className="card-upper-btn" onClick={e => browserHistory.push('/')}>
+                    <div className="card-upper-btn" onClick={e => browserHistory.push('/categories')}>
                         <i className="fa fa-reply-all" aria-hidden="true"></i>
                     </div>
                     <div className="card-upper-btn" onClick={e => this.resetCard(data)}>

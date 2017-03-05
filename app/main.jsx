@@ -10,22 +10,31 @@ import initialize from './initialize'
 import { DEBUG, API_URL } from './config'
 
 const apiMiddleware = ({ dispatch, getState }) => next => action => {
-    const { apiType, callApi } = action
+    const { apiType, callApi, success, error } = action
     if (!apiType) return next(action)
 
-    const loading = apiType + '_LOADING'
-    const success = apiType + '_SUCCESS'
-    const error = apiType + '_ERROR'
+    const loadingAction = apiType + '_LOADING'
+    const successAction = apiType + '_SUCCESS'
+    const errorAction = apiType + '_ERROR'
 
-    dispatch({ type: loading })
-    return callApi().then(res => dispatch({
-        type: success,
-        data: res.data
-    }))
-    .catch(err => dispatch({
-        type: error,
-        error: err.response.data
-    }))
+    dispatch({ type: loadingAction })
+    let promise = callApi().then(res => {
+        dispatch({
+            type: successAction,
+            data: res.data
+        })
+        return res
+    })
+    if (success) promise = promise.then(res => success(res))
+    promise = promise.catch(err => {
+        dispatch({
+            type: errorAction,
+            error: err.response.data
+        })
+        return err
+    })
+    if (error) promise = promise.then(err => error(err))
+    return promise
 }
 
 // Use redux middlewares

@@ -3,8 +3,8 @@ export default (req, res, next) => {
         return next()
 
     const body = Object.assign({}, req.body)
-    if (body.password) {
-        body.password = '[FILTERED]'
+    if (body.passwd) {
+        body.passwd = '[FILTERED]'
     }
     console.log('[INFO] Params:', body)
     next()
