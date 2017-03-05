@@ -13,17 +13,18 @@ mongoose.Promise = Promise // Use es6 Promise instead of mongoose default promis
 
 const app = express() // Yeah, this is an Express app
 
-app.use(morgan('dev')) // Log coming requests
-
 if (DEBUG) {
     app.use(livereload()) // Add livereload script to static files
+    app.use(morgan('dev')) // Log coming requests
+} else {
+    app.use(morgan('combined'))
 }
 
 app.use(express.static(PUBLIC_PATH)) // Serve static files
 app.use(bodyParser.urlencoded({ extended: false })) // Parse application/x-www.form-urlencoded
 app.use(bodyParser.json()) // Parse application/json
 app.use(bodyLogger) // We now have req.body, just log it
-app.use(jwt({ secret: SECRET_KEY, credentialsRequired: false })) // Decode JSON web token, we now have req.user
+app.use(jwt({ secret: SECRET_KEY, credentialsRequired: false, requestProperty: 'session' })) // Decode JSON web token, we now have req.session
 app.use(router) // This is where we use defined routes
 app.use(errorHandler) // Handle some types of error before returning to client
 

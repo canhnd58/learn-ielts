@@ -5,8 +5,13 @@ import * as loader from './middlewares/recordLoader'
 import * as cards from './controllers/cards'
 import * as categories from './controllers/categories'
 import * as users from './controllers/users'
+import * as sessions from './controllers/sessions'
 
 const apiRouter = Router()
+    .use('/login', Router()
+        .get('/', sessions.load)
+        .post('/', sessions.login)
+    )
     .use('/users', Router()
         .param('id', loader.loadUser)
         .get('/', users.index)
