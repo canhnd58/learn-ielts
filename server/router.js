@@ -1,10 +1,20 @@
 import { Router } from 'express'
 import path from 'path'
 import { PUBLIC_PATH } from './config'
+import * as loader from './middlewares/recordLoader'
 import * as cards from './controllers/cards'
 import * as categories from './controllers/categories'
+import * as users from './controllers/users'
 
 const apiRouter = Router()
+    .use('/users', Router()
+        .param('id', loader.loadUser)
+        .get('/', users.index)
+        .post('/', users.create)
+        .get('/:id', users.show)
+        .put('/:id', users.update)
+        .delete('/:id', users.destroy)
+    )
     .use('/cards', Router()
         .get('/', cards.index)
     )
