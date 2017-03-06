@@ -86,7 +86,7 @@
 }
 
 #card-table {
-    position: absolute;
+    position: fixed;
     width: 90%;
     height: 90%;
     top: 50%;
@@ -137,6 +137,11 @@
             margin-right: 3%;
             vertical-align: text-top;
         }
+    }
+
+    #card-table-middle {
+        height: 75%;
+        overflow-y: auto;
     }
 
     #card-table-lower {

@@ -50,8 +50,10 @@ class CardTable extends Component {
                     <i className="fa fa-reply-all" aria-hidden="true"></i>
                 </div>
             </div>
-            <div id="card-table-content">
-                {indices.slice(startIndex, endIndex).map((index, i) => <CardRow key={data[index]._id} {...data[index]} idx={startIndex + i + 1} />)}
+            <div id="card-table-middle">
+                <div id="card-table-content">
+                    {indices.slice(startIndex, endIndex).map((index, i) => <CardRow key={data[index]._id} {...data[index]} idx={startIndex + i + 1} />)}
+                </div>
             </div>
             <div id="card-table-lower">
                 <button className="card-table-lower-btn" onClick={this.prevPage}>
