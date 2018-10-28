@@ -40,6 +40,7 @@ class CardPage extends Component {
 
     componentDidMount() {
         this.resetInterval()
+        document.addEventListener('keydown', this.handleKeyDown)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -56,6 +57,7 @@ class CardPage extends Component {
     componentWillUnmount() {
         this.props.onEmptyCards()
         if (this.interval) clearInterval(this.interval)
+        document.removeEventListener('keydown', this.handleKeyDown)
     }
 
     resetInterval = () => {
@@ -136,6 +138,31 @@ class CardPage extends Component {
         this.setState({ maxSec })
     }
 
+    handleKeyDown = e => {
+        switch (e.key) {
+            case 'ArrowLeft':
+            case 'h':
+                this.prevCard()
+                break
+            case 'ArrowRight':
+            case 'l':
+                this.nextCard()
+                break
+            case 'r': // refresh list
+                this.resetCard(this.props.data)
+                break
+            case 'c': // change mode
+                this.changeMode()
+                break
+            case 'a': // toggle auto mode
+                this.toggleAuto()
+                break
+            case 't': // toggle result table
+                this.toggleResult()
+                break
+        }
+    }
+
     render() {
         const { data, loading, error } = this.props
         const { current, indices, types, autoNext, currentSec, maxSec, showResult, mode } = this.state
@@ -148,7 +175,7 @@ class CardPage extends Component {
                     <Switch
                         on={autoNext}
                         maxSec={maxSec}
-                        text={autoNext ? `${currentSec}`  : 'Off'}
+                        text={autoNext ? `${currentSec}` : 'Off'}
                         onClick={this.toggleAuto}
                         changeMaxSec={this.changeMaxSec}
                     />
